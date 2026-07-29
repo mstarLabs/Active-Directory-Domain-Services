@@ -1,7 +1,5 @@
 # Active Directory Domain Services
 
----
-
 ## Project Overview
 
 This repository documents the deployment and configuration of Active Directory Domain Services (AD DS) within the Enterprise Identity Security Lab.
