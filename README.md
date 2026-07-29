@@ -305,13 +305,14 @@ Successful validation confirms that Active Directory Domain Services integrates 
 
 ## Related Projects
 
-The Active Directory Domain Services repository introduces centralized identity services into the Enterprise Identity Security Lab.
+This repository provides centralized policy management, role-based access control, and enterprise security controls for the Enterprise Identity Security Lab.
 
 | Repository | Architectural Relationship |
 |------------|----------------------------|
-| mstarLabs | Provides governance standards, portfolio architecture, repository responsibilities, and modernization workflow for the Enterprise Identity Security Lab. |
-| Enterprise Network Architecture | Defines the network topology, trust boundaries, and communication requirements used by Active Directory. |
-| Enterprise Firewall Platform | Implements the routing, firewall policies, and least-privilege communication required for Active Directory services. |
+| **[mstarLabs](https://github.com/mstarLabs/mstarLabs)** | Provides the portfolio architecture, governance standards, repository responsibilities, and modernization workflow for the Enterprise Identity Security Lab. |
+| **[Enterprise Network Architecture](https://github.com/mstarLabs/Enterprise-Network-Architecture)** | Defines the network topology, trust boundaries, and communication requirements used by this repository. |
+| **[Enterprise Firewall Platform](https://github.com/mstarLabs/Enterprise-Firewall-Platform)** | Implements the routing, firewall policies, and least-privilege communication required for centralized policy management. |
+| **[Active Directory Domain Services](https://github.com/mstarLabs/Active-Directory-Domain-Services)** | Provides the centralized identity platform, authentication services, Organizational Units, and directory services required for Group Policy and RBAC. |
 
 Additional identity repositories will build upon the centralized identity platform documented here while maintaining the repository responsibilities defined by the Enterprise Identity Security Lab governance framework.
 
