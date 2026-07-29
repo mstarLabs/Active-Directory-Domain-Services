@@ -125,10 +125,11 @@ Identity-aware firewall policies, routing behavior, and protocol enforcement rem
 ## Implementation
 
 ### Domain Controller Deployment
- - Navigated to `https://www.microsoft.com/en-us/evalcenter/download-windows-server-2019` and downloaded ISO
- - Open VirtualBox, create new VM selecting the downloaded ISO of Windows Server 2019
- - Provide VM with 2 CPU, 4G RAM, and 30G Storage
- - Configure 1 adapter to simulate VLAN configuration (LabNet_VLAN10)
+
+- Provisioned the **DC01** virtual machine within the VirtualBox enterprise lab environment.
+- Allocated compute, memory, and storage resources appropriate for the simulated enterprise identity infrastructure.
+- Connected the virtual machine to the **LabNet_VLAN10** infrastructure network established by the Enterprise Network Architecture repository.
+- Prepared the server to host the enterprise Active Directory Domain Services role while maintaining the architectural boundaries established by the Enterprise Identity Security Lab.
 
 > **Implementation Evidence:** Windows Server 2019 virtual machine configuration for the DC01 domain controller.
 
