@@ -334,10 +334,15 @@ The related repositories above demonstrate how this repository integrates within
 
 The Active Directory Domain Services repository will continue evolving to support additional identity, security, and operational capabilities within the Enterprise Identity Security Lab.
 
-Future architectural requirements include:
+Future architectural enhancements include:
 
-- Active Directory Certificate Services
+- Active Directory Certificate Services (AD CS)
 - Hybrid Identity with Microsoft Entra ID
-- Identity Automation
+- Identity Automation with PowerShell and Microsoft Graph
+- Identity Governance and Administration (IGA)
+- Privileged Access Management (PAM)
+- Enterprise Public Key Infrastructure (PKI)
+- Tiered Administrative Model
+- Enterprise Monitoring and Security Information and Event Management (SIEM) integration
 
-As additional enterprise identity services are introduced, this repository will document the Active Directory architecture, enterprise DNS, authentication services, directory design, and identity dependencies required to support them.
+As additional enterprise identity services are introduced, this repository will continue documenting the Active Directory architecture, enterprise DNS, authentication services, directory design, and identity dependencies required to support downstream enterprise security platforms while maintaining clear architectural responsibilities across the portfolio.
