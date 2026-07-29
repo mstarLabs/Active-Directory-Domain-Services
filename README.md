@@ -8,7 +8,7 @@ Building upon the Enterprise Network Architecture and Enterprise Firewall Platfo
 
 Rather than documenting Windows Server installation in isolation, this repository demonstrates how enterprise identity infrastructure is deployed onto an existing segmented network while following least-privilege communication, centralized authentication, and enterprise architecture principles.
 
-The repository emphasizes identity-first architecture, enterprise directory design, authentication services, DNS integration, validation, and implementation evidence.
+This repository emphasizes identity-first architecture, enterprise directory design, authentication services, DNS integration, validation, and implementation evidence.
 
 ---
 
@@ -72,7 +72,7 @@ The Active Directory Domain Services implementation was designed around the foll
 | Platform | Microsoft Active Directory Domain Services |
 | Operating System | Windows Server 2019 Standard |
 | Hypervisor | Oracle VirtualBox |
-| Primary Role | Domain Controller |
+| Primary Role | Active Directory Domain Controller |
 | Domain | lab.local |
 | DNS | Active Directory Integrated DNS |
 | Primary Services | Authentication, Authorization, DNS, Directory Services |
@@ -88,7 +88,7 @@ The supporting network topology, routing, firewall policies, and communication r
 |-----------|---------------------|-------------------|
 | Adapter 1 | LabNet_VLAN10   | Infrastructure (DC01) |
 
-### Sales_Client (Win 10)
+### Sales_Client (Windows 10)
 |  Adapter  | VirtualBox Network  | Purpose           |
 |-----------|---------------------|-------------------|
 | Adapter 1 | LabNet_VLAN20   | Sales Clients (Act as VLAN) |
@@ -128,7 +128,7 @@ Identity-aware firewall policies, routing behavior, and protocol enforcement rem
 
 - Provisioned the **DC01** virtual machine within the VirtualBox enterprise lab environment.
 - Allocated compute, memory, and storage resources appropriate for the simulated enterprise identity infrastructure.
-- Connected the virtual machine to the **LabNet_VLAN10** infrastructure network established by the Enterprise Network Architecture repository.
+- Connected the virtual machine to the **LabNet_VLAN10** infrastructure network defined by the Enterprise Network Architecture repository.
 - Prepared the server to host the enterprise Active Directory Domain Services role while maintaining the architectural boundaries established by the Enterprise Identity Security Lab.
 
 > **Implementation Evidence:** Windows Server 2019 virtual machine configuration for the DC01 domain controller.
@@ -165,7 +165,7 @@ Identity-aware firewall policies, routing behavior, and protocol enforcement rem
 ### Deploy Domain-Joined Client
 
 - Provisioned a Windows 10 Enterprise client within the Sales workstation network segment.
-- Configured the client to communicate with enterprise identity services through the firewall policies established by the Enterprise Firewall Platform.
+- Configured the client to communicate with enterprise identity services through the least-privilege firewall policies implemented by the Enterprise Firewall Platform.
 - Joined the workstation to the **lab.local** Active Directory domain.
 - Verified successful authentication using a domain user account.
 
@@ -173,8 +173,8 @@ Identity-aware firewall policies, routing behavior, and protocol enforcement rem
 
 ![SalesClient_VM_Configuration](https://github.com/user-attachments/assets/cb9e3cff-6162-431b-8233-fbd0b0cd15f9)
 
-- Check communication from VLAN20_SALES to VLAN10_INFRA ensure they can see eachother in the simulated VLANs with pfSense
-- Connect to lab.local domain using the Sales Test user as login
+- Verified communication between the Sales workstation segment and the infrastructure network through the least-privilege firewall policies implemented by the Enterprise Firewall Platform.
+- Validated successful domain authentication using a standard Active Directory user account.
 
 > **Validation Evidence:** Successful integration of the Sales client with the `lab.local` Active Directory domain.
 
@@ -210,7 +210,7 @@ This repository establishes the identity platform required by downstream reposit
 
 During Active Directory deployment, identity-service communication requirements were validated against the least-privilege firewall policies implemented by the Enterprise Firewall Platform.
 
-This process identified several protocol and routing dependencies required for successful domain authentication, DNS resolution, and directory services. The resulting firewall refinements are documented within the Enterprise Firewall Platform repository, while this repository documents why those communication requirements exist.
+This process identified several protocol and firewall communication dependencies required to support successful domain authentication, DNS resolution, and directory services.
 
 ### Identity Communication Validation
 
@@ -271,7 +271,7 @@ The Active Directory Domain Services deployment was validated through functional
 | LDAP communication | Clients successfully communicate with directory services over LDAP | ✅ Passed |
 | Kerberos authentication | Users successfully authenticate using Kerberos | ✅ Passed |
 | Organizational Unit structure | Organizational Units support centralized identity administration | ✅ Passed |
-| Firewall communication dependencies | Required identity-service protocols successfully traverse the firewall | ✅ Passed |
+| Identity communication dependencies | Required identity-service protocols successfully traverse the firewall | ✅ Passed |
 
 Successful validation confirms that Active Directory Domain Services integrates correctly with the Enterprise Network Architecture and Enterprise Firewall Platform while establishing the centralized identity services required by future repositories.
 
@@ -307,11 +307,11 @@ Successful validation confirms that Active Directory Domain Services integrates 
 
 ### Documentation
 
-- Enterprise identity documentation
-- Directory architecture documentation
+- Enterprise architecture documentation
+- Identity infrastructure documentation
 - Configuration evidence
 - Validation documentation
-- Cross-repository architectural references
+- Cross-repository architectural governance
 
 ---
 
