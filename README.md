@@ -97,7 +97,7 @@ The supporting network topology, routing, firewall policies, and communication r
 
 ---
 
-## Enterprise Identity Dependencies
+## Identity Communication Requirements
 
 Active Directory Domain Services depends on the communication paths implemented by the Enterprise Firewall Platform.
 
@@ -117,6 +117,8 @@ Enterprise identity services introduced by this repository include:
 The Enterprise Firewall Platform repository documents how these communication requirements are implemented using least-privilege firewall rules.
 
 This repository documents why those services are required from an identity perspective.
+
+Identity-aware firewall policies, routing behavior, and protocol enforcement remain the responsibility of the Enterprise Firewall Platform repository.
 
 ---
 
@@ -217,6 +219,8 @@ Ref 9: New VLAN20_SALES Rules
 
 The Active Directory Domain Services implementation follows enterprise identity-security principles that support least privilege, centralized authentication, and secure administrative boundaries.
 
+This repository documents the enterprise identity architecture and authentication services implemented within the Active Directory environment. Network topology and firewall-policy enforcement remain documented within their respective repositories.
+
 ### Centralized Authentication
 
 Active Directory provides centralized authentication and authorization services for enterprise resources.
@@ -251,6 +255,8 @@ The Active Directory Domain Services deployment was validated through functional
 | Kerberos authentication | Successful | ✅ Passed |
 | Organizational Unit creation | Successful | ✅ Passed |
 | Firewall communication dependencies | Successful | ✅ Passed |
+
+Successful validation confirms that Active Directory Domain Services functions as the centralized identity platform for the Enterprise Identity Security Lab while satisfying the architectural and communication requirements established by the Enterprise Network Architecture and Enterprise Firewall Platform repositories.
 
 ---
 
@@ -302,7 +308,7 @@ The Active Directory Domain Services repository introduces centralized identity 
 | Enterprise Network Architecture | Defines the network topology, trust boundaries, and communication requirements used by Active Directory. |
 | Enterprise Firewall Platform | Implements the routing, firewall policies, and least-privilege communication required for Active Directory services. |
 
-Additional identity repositories will extend this implementation as the Enterprise Identity Security Lab evolves.
+Additional identity repositories will build upon the centralized identity platform documented here while maintaining the repository responsibilities defined by the Enterprise Identity Security Lab governance framework.
 
 ---
 
@@ -310,13 +316,10 @@ Additional identity repositories will extend this implementation as the Enterpri
 
 The Active Directory Domain Services repository will continue evolving to support additional identity, security, and operational capabilities within the Enterprise Identity Security Lab.
 
-Future identity requirements include:
+Future architectural requirements include:
 
-- Group Policy, RBAC, and Security Controls
 - Active Directory Certificate Services
 - Hybrid Identity with Microsoft Entra ID
 - Identity Automation
-- Identity Governance and Administration
-- Privileged Access Management
 
-As additional enterprise identity services are introduced, this repository will document the architectural changes required to securely integrate them while maintaining centralized authentication, least privilege, and enterprise identity governance.
+As additional enterprise identity services are introduced, this repository will document the Active Directory architecture, enterprise DNS, authentication services, directory design, and identity dependencies required to support them.
