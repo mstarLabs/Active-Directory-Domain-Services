@@ -214,36 +214,45 @@ This process identified several protocol and routing dependencies required for s
 
 ### Identity Communication Validation
 
- - Domin join worked right off the bat, but figured this was do to the catch allow all rule at the end
- - When rule was disabled, domain join did not work nor did DNS resolution
- - Discovered pfSense source or destiniaton labled with `interface address` did **not** mean all IPs on that interface
- - Changed all firewall setting to `interface subnet` which did mean all IPs on that interface
- - DNS was still not working after that change so looked at VLAN10 rules to ensure I made the change to subnet as well
- - Even with the change still could not get DNS to work; After a change of destination to any on port 53 and source the DC01
- - DNS started resolving
- - Testing showed that allowing DNS traffic from the domain controller to any destination on TCP/UDP 53 resolved internal DNS communication. Additional investigation into pfSense's state handling and DNS forwarding behavior is planned as the lab evolves.
- - Ran testing in powershell `Test-NetConnection lab.local -Port 389` as well as port `135`, and port `445` These all came back good but domain join still did not work
+Identity communication was validated by comparing Active Directory authentication requirements against the least-privilege firewall policies implemented by the Enterprise Firewall Platform.
 
-> **Validation Evidence:** PowerShell connectivity testing of required Active Directory service ports between the Sales client and DC01.
+Validation activities included:
+
+- Verified successful domain communication between the Sales workstation network and the domain controller.
+- Confirmed that DNS resolution, LDAP, Kerberos, RPC Endpoint Mapper, SMB, and supporting identity protocols traversed the firewall as expected.
+- Evaluated firewall behavior after removing temporary permissive rules to identify the minimum communication requirements necessary for successful domain operations.
+- Validated firewall rule configuration using PowerShell connectivity testing and functional domain authentication.
+
+Testing identified several firewall configuration refinements that were required before enterprise identity services functioned reliably within the segmented network.
+
+> **Validation Evidence:** PowerShell connectivity testing verifying Active Directory service communication between the Sales client and DC01.
 
 ![SalesClient_PortTest](https://github.com/user-attachments/assets/5fc18da7-e9b1-40fe-ae12-85ee914d9128)
 
 ### Identity Service Dependency Discovery
 
- - Discovered an article that provides a list of ports that need to be added to pfSense to allow AD Domain join
- - Made changes to VLAN20
- - I was missing port `135` for RPC endpoint mapper, port `139` for NetBIOS Sessions Service, ports  `49152 - 65535` for dynamic RPC ports port `137` and `138` were optional but added them anyway
- - To get internet I added TCP/UPD port `443` and `80` and got rid of the allow all to any rule
- - On VLAN10 I set a DC to any on port TCP/UDP 53 allow to get DNS working.
- - These changed allowed the Sales client on VLAN20 to resolve DNS and join the domain lab.local
+Functional testing identified several communication dependencies that were not initially captured within the enterprise firewall policy.
 
-> **Configuration Evidence:** Updated VLAN10 infrastructure firewall rules supporting DNS and Active Directory communication.
+Analysis determined that successful Active Directory deployment required additional identity-service protocols beyond basic DNS and LDAP communication.
 
-![New_VLAN10_Firewall_Rules](https://github.com/user-attachments/assets/2b872b14-cf0a-41f7-83b8-f481362d29d5)
+Engineering activities included:
 
-> **Configuration Evidence:** Updated VLAN20 Sales firewall rules permitting required Active Directory authentication and domain-join traffic.
+- Identified required RPC Endpoint Mapper (TCP 135) communication.
+- Implemented support for Dynamic RPC (TCP 49152–65535).
+- Added NetBIOS Session Service (TCP 139) and supporting NetBIOS services where appropriate.
+- Refined DNS communication policies to support Active Directory-integrated DNS.
+- Removed temporary permissive firewall rules after validating required protocol dependencies.
+- Confirmed successful domain join and enterprise authentication using least-privilege firewall policies.
 
-![New_VLAN20_Firewall_Rules](https://github.com/user-attachments/assets/abd17b9f-0f9b-4d04-955a-063148b9461e)
+These engineering findings were incorporated into the Enterprise Firewall Platform repository to ensure firewall policy accurately reflects Active Directory communication requirements within the Enterprise Identity Security Lab.
+
+> **Configuration Evidence:** Updated VLAN10 infrastructure firewall rules supporting enterprise identity services.
+
+![New_VLAN10_Firewall_Rules](...)
+
+> **Configuration Evidence:** Updated VLAN20 Sales firewall rules supporting Active Directory authentication and domain communication.
+
+![New_VLAN20_Firewall_Rules](...)
 
 ---
 
