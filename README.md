@@ -252,14 +252,14 @@ The Active Directory Domain Services deployment was validated through functional
 
 | Test | Expected Result | Status |
 |------|-----------------|:------:|
-| Domain controller promotion | Successful | ✅ Passed |
-| Active Directory DNS | Successful | ✅ Passed |
-| DNS name resolution | Successful | ✅ Passed |
-| Domain join | Successful | ✅ Passed |
-| LDAP communication | Successful | ✅ Passed |
-| Kerberos authentication | Successful | ✅ Passed |
-| Organizational Unit creation | Successful | ✅ Passed |
-| Firewall communication dependencies | Successful | ✅ Passed |
+| Domain controller promotion | Domain controller successfully promoted into the Active Directory forest | ✅ Passed |
+| Active Directory DNS | Domain controller hosts and responds to integrated DNS zones | ✅ Passed |
+| Internal DNS resolution | Domain clients successfully resolve Active Directory DNS records | ✅ Passed |
+| Domain join | Client successfully joins the Active Directory domain | ✅ Passed |
+| LDAP communication | Clients successfully communicate with directory services over LDAP | ✅ Passed |
+| Kerberos authentication | Users successfully authenticate using Kerberos | ✅ Passed |
+| Organizational Unit structure | Organizational Units support centralized identity administration | ✅ Passed |
+| Firewall communication dependencies | Required identity-service protocols successfully traverse the firewall | ✅ Passed |
 
 Successful validation confirms that Active Directory Domain Services integrates correctly with the Enterprise Network Architecture and Enterprise Firewall Platform while establishing the centralized identity services required by future repositories.
 
