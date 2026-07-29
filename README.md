@@ -65,7 +65,7 @@ The Active Directory Domain Services implementation was designed around the foll
 
 ---
 
-## Platform and Scope
+## Identity Platform
 
 | Component | Configuration |
 |-----------|---------------|
@@ -124,7 +124,7 @@ Identity-aware firewall policies, routing behavior, and protocol enforcement rem
 
 ## Implementation
 
-### Virtual Appliance Deployment
+### Domain Controller Deployment
  - Navigated to `https://www.microsoft.com/en-us/evalcenter/download-windows-server-2019` and downloaded ISO
  - Open VirtualBox, create new VM selecting the downloaded ISO of Windows Server 2019
  - Provide VM with 2 CPU, 4G RAM, and 30G Storage
@@ -181,40 +181,6 @@ Ref 6: Sales Client Domain Joined
 
 ---
 
-## Implementation Challenges
-
-### Firewall Policy Validation
-
- - Domin join worked right off the bat, but figured this was do to the catch allow all rule at the end
- - When rule was disabled, domain join did not work nor did DNS resolution
- - Discovered pfSense source or destiniaton labled with `interface address` did **not** mean all IPs on that interface
- - Changed all firewall setting to `interface subnet` which did mean all IPs on that interface
- - DNS was still not working after that change so looked at VLAN10 rules to ensure I made the change to subnet as well
- - Even with the change still could not get DNS to work; After a change of destination to any on port 53 and source the DC01
- - DNS started resolving
- - I am still not sure why setting he destination to `Any` works. only thing I can think of is has to do with routing in pfSense
- - Ran testing in powershell `Test-NetConnection lab.local -Port 389` as well as port `135`, and port `445` These all came back good but domain join still did not work
-
-Ref 7: Tested port connection to DC01
-
-![SalesClient_PortTest](https://github.com/user-attachments/assets/5fc18da7-e9b1-40fe-ae12-85ee914d9128)
-
-### Identity Service Dependency Analysis
- - Discovered an article that provides a list of ports that need to be added to pfSense to allow AD Domain join
- - Made changes to VLAN20
- - I was missing port `135` for RPC endpoint mapper, port `139` for NetBIOS Sessions Service, ports  `49152 - 65535` for dynamic RPC ports port `137` and `138` were optional but added them anyway
- - To get internet I added TCP/UPD port `443` and `80` and got rid of the allow all to any rule
- - On VLAN10 I set a DC to any on port TCP/UDP 53 allow to get DNS working.
- - These changed allowed the Sales client on VLAN20 to resolve DNS and join the domain lab.local
-
-Ref 8: New VLAN10_INFRA Rules
-![New_VLAN10_Firewall_Rules](https://github.com/user-attachments/assets/2b872b14-cf0a-41f7-83b8-f481362d29d5)
-
-Ref 9: New VLAN20_SALES Rules
-![New_VLAN20_Firewall_Rules](https://github.com/user-attachments/assets/abd17b9f-0f9b-4d04-955a-063148b9461e)
-
----
-
 ## Security Design
 
 The Active Directory Domain Services implementation follows enterprise identity-security principles that support least privilege, centralized authentication, and secure administrative boundaries.
@@ -229,13 +195,52 @@ Active Directory provides centralized authentication and authorization services 
 
 Authentication traffic is restricted to only the protocols required for approved identity services.
 
-### Identity Infrastructure
+### Centralized Identity Services
 
 DNS, Kerberos, LDAP, RPC, Group Policy, and directory services are centralized on the domain controller while communication is controlled by the Enterprise Firewall Platform.
 
 ### Enterprise Foundation
 
 This repository establishes the identity platform required by downstream repositories including Group Policy, Active Directory Certificate Services, Hybrid Identity, Identity Automation, Identity Governance, and Privileged Access Management.
+
+---
+
+## Identity Communication Engineering
+
+During Active Directory deployment, identity-service communication requirements were validated against the least-privilege firewall policies implemented by the Enterprise Firewall Platform.
+
+This process identified several protocol and routing dependencies required for successful domain authentication, DNS resolution, and directory services. The resulting firewall refinements are documented within the Enterprise Firewall Platform repository, while this repository documents why those communication requirements exist.
+
+### Identity Communication Validation
+
+ - Domin join worked right off the bat, but figured this was do to the catch allow all rule at the end
+ - When rule was disabled, domain join did not work nor did DNS resolution
+ - Discovered pfSense source or destiniaton labled with `interface address` did **not** mean all IPs on that interface
+ - Changed all firewall setting to `interface subnet` which did mean all IPs on that interface
+ - DNS was still not working after that change so looked at VLAN10 rules to ensure I made the change to subnet as well
+ - Even with the change still could not get DNS to work; After a change of destination to any on port 53 and source the DC01
+ - DNS started resolving
+ - Testing showed that allowing DNS traffic from the domain controller to any destination on TCP/UDP 53 resolved internal DNS communication. Additional investigation into pfSense's state handling and DNS forwarding behavior is planned as the lab evolves.
+ - Ran testing in powershell `Test-NetConnection lab.local -Port 389` as well as port `135`, and port `445` These all came back good but domain join still did not work
+
+Ref 7: Tested port connection to DC01
+
+![SalesClient_PortTest](https://github.com/user-attachments/assets/5fc18da7-e9b1-40fe-ae12-85ee914d9128)
+
+### Identity Service Dependency Discovery
+
+ - Discovered an article that provides a list of ports that need to be added to pfSense to allow AD Domain join
+ - Made changes to VLAN20
+ - I was missing port `135` for RPC endpoint mapper, port `139` for NetBIOS Sessions Service, ports  `49152 - 65535` for dynamic RPC ports port `137` and `138` were optional but added them anyway
+ - To get internet I added TCP/UPD port `443` and `80` and got rid of the allow all to any rule
+ - On VLAN10 I set a DC to any on port TCP/UDP 53 allow to get DNS working.
+ - These changed allowed the Sales client on VLAN20 to resolve DNS and join the domain lab.local
+
+Ref 8: New VLAN10_INFRA Rules
+![New_VLAN10_Firewall_Rules](https://github.com/user-attachments/assets/2b872b14-cf0a-41f7-83b8-f481362d29d5)
+
+Ref 9: New VLAN20_SALES Rules
+![New_VLAN20_Firewall_Rules](https://github.com/user-attachments/assets/abd17b9f-0f9b-4d04-955a-063148b9461e)
 
 ---
 
@@ -256,7 +261,7 @@ The Active Directory Domain Services deployment was validated through functional
 | Organizational Unit creation | Successful | ✅ Passed |
 | Firewall communication dependencies | Successful | ✅ Passed |
 
-Successful validation confirms that Active Directory Domain Services functions as the centralized identity platform for the Enterprise Identity Security Lab while satisfying the architectural and communication requirements established by the Enterprise Network Architecture and Enterprise Firewall Platform repositories.
+Successful validation confirms that Active Directory Domain Services integrates correctly with the Enterprise Network Architecture and Enterprise Firewall Platform while establishing the centralized identity services required by future repositories.
 
 ---
 
