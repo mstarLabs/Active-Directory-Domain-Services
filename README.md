@@ -136,22 +136,23 @@ Identity-aware firewall policies, routing behavior, and protocol enforcement rem
 ![DC01_VM_Configuration](https://github.com/user-attachments/assets/d42e1ba6-36cf-4783-afa5-f31c794c609c)
 
 ### Configure Active Directory Domain Services
- - After installation set a static IP to `192.168.10.5` and configure the DNS to `127.0.0.1`
- - Installed `Active Directory Domain Services` via Server Manager
- - Kept default settings
- - Promoted server to `Domain Controller` for the new forest: `lab.local`
- - Switched to `LAB\Administrator` to finish setup
+
+- Configured a static IP address and DNS settings to support enterprise identity services.
+- Installed the Active Directory Domain Services server role.
+- Created the **lab.local** Active Directory forest and promoted **DC01** to the first domain controller.
+- Established the enterprise identity foundation required for centralized authentication, authorization, directory services, and DNS.
+- Verified successful domain controller promotion before proceeding with enterprise identity configuration.
 
 > **Implementation Evidence:** DC01 promotion to an Active Directory domain controller for the `lab.local` forest.
 
 ![DC01_PromoteToDC](https://github.com/user-attachments/assets/56001562-a967-47c3-9311-c44bbf0f625c)
 
 ### Validate Identity Infrastructure
- - Verififed Host (A) records in DNS Manager
- - Set DNS forwarders to `8.8.8.8` and `1.1.1.1`
- - Created Organizational Units and test users in ADUC:
-   - `HR_Users`
-   - `Sales_Users`
+
+- Verified Active Directory-integrated DNS functionality and host record registration.
+- Configured DNS forwarders to support external name resolution.
+- Created the initial Organizational Unit hierarchy to support delegated administration and policy application.
+- Provisioned test user accounts to validate authentication and downstream identity services.
 
 > **Configuration Evidence:** Active Directory-integrated DNS configuration and host records on DC01.
 
@@ -162,12 +163,11 @@ Identity-aware firewall policies, routing behavior, and protocol enforcement rem
 ![DC01_Users](https://github.com/user-attachments/assets/99be2487-f96b-47f1-aad6-dab0f0c68278)
 
 ### Deploy Domain-Joined Client
- - Navigated to `https://www.microsoft.com/en-us/software-download/windows10` and downloaded Windows 10 Installation Media
- - Created a Windows 10 ISO using Microsofts creation media tool
- - Open VirtualBox, create new VM selecting the downloaded ISO of Windows 10
- - Provide VM with 2 CPU, 4G RAM, and 50G Storage
- - Configure 1 adapter to simulate VLAN configuration (LabNet_VLAN20)
- - During instalation selected Windows 10 Pro
+
+- Provisioned a Windows 10 Enterprise client within the Sales workstation network segment.
+- Configured the client to communicate with enterprise identity services through the firewall policies established by the Enterprise Firewall Platform.
+- Joined the workstation to the **lab.local** Active Directory domain.
+- Verified successful authentication using a domain user account.
 
 > **Implementation Evidence:** Windows 10 virtual machine configuration for the Sales domain client.
 
