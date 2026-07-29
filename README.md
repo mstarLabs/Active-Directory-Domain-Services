@@ -292,8 +292,6 @@ The Active Directory Domain Services deployment was validated through functional
 
 ---
 
----
-
 ## Related Projects
 
 The Active Directory Domain Services repository introduces centralized identity services into the Enterprise Identity Security Lab.
