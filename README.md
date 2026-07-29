@@ -130,7 +130,7 @@ Identity-aware firewall policies, routing behavior, and protocol enforcement rem
  - Provide VM with 2 CPU, 4G RAM, and 30G Storage
  - Configure 1 adapter to simulate VLAN configuration (LabNet_VLAN10)
 
-Ref 1: Windows Server 2019 VM Configuration
+> **Implementation Evidence:** Windows Server 2019 virtual machine configuration for the DC01 domain controller.
 
 ![DC01_VM_Configuration](https://github.com/user-attachments/assets/d42e1ba6-36cf-4783-afa5-f31c794c609c)
 
@@ -141,7 +141,7 @@ Ref 1: Windows Server 2019 VM Configuration
  - Promoted server to `Domain Controller` for the new forest: `lab.local`
  - Switched to `LAB\Administrator` to finish setup
 
-Ref 2: ADDS Promote to Domain Controllor
+> **Implementation Evidence:** DC01 promotion to an Active Directory domain controller for the `lab.local` forest.
 
 ![DC01_PromoteToDC](https://github.com/user-attachments/assets/56001562-a967-47c3-9311-c44bbf0f625c)
 
@@ -152,11 +152,11 @@ Ref 2: ADDS Promote to Domain Controllor
    - `HR_Users`
    - `Sales_Users`
 
-Ref 3: DNS Manager
+> **Configuration Evidence:** Active Directory-integrated DNS configuration and host records on DC01.
 
 ![DC01_DNSManager](https://github.com/user-attachments/assets/6abe636c-e106-4f5d-9bb1-7aa7366a634b)
 
-Ref 4: ADUC Users
+> **Configuration Evidence:** Organizational Units and test-user accounts configured in Active Directory Users and Computers.
 
 ![DC01_Users](https://github.com/user-attachments/assets/99be2487-f96b-47f1-aad6-dab0f0c68278)
 
@@ -168,14 +168,14 @@ Ref 4: ADUC Users
  - Configure 1 adapter to simulate VLAN configuration (LabNet_VLAN20)
  - During instalation selected Windows 10 Pro
 
-Ref 5: Windows 10 VM Configuration
+> **Implementation Evidence:** Windows 10 virtual machine configuration for the Sales domain client.
 
 ![SalesClient_VM_Configuration](https://github.com/user-attachments/assets/cb9e3cff-6162-431b-8233-fbd0b0cd15f9)
 
 - Check communication from VLAN20_SALES to VLAN10_INFRA ensure they can see eachother in the simulated VLANs with pfSense
 - Connect to lab.local domain using the Sales Test user as login
 
-Ref 6: Sales Client Domain Joined
+> **Validation Evidence:** Successful integration of the Sales client with the `lab.local` Active Directory domain.
 
 ![SalesClient_DomainJoin](https://github.com/user-attachments/assets/a9361b8c-d495-4f32-b953-20e53c124846)
 
@@ -223,7 +223,7 @@ This process identified several protocol and routing dependencies required for s
  - Testing showed that allowing DNS traffic from the domain controller to any destination on TCP/UDP 53 resolved internal DNS communication. Additional investigation into pfSense's state handling and DNS forwarding behavior is planned as the lab evolves.
  - Ran testing in powershell `Test-NetConnection lab.local -Port 389` as well as port `135`, and port `445` These all came back good but domain join still did not work
 
-Ref 7: Tested port connection to DC01
+> **Validation Evidence:** PowerShell connectivity testing of required Active Directory service ports between the Sales client and DC01.
 
 ![SalesClient_PortTest](https://github.com/user-attachments/assets/5fc18da7-e9b1-40fe-ae12-85ee914d9128)
 
@@ -236,10 +236,12 @@ Ref 7: Tested port connection to DC01
  - On VLAN10 I set a DC to any on port TCP/UDP 53 allow to get DNS working.
  - These changed allowed the Sales client on VLAN20 to resolve DNS and join the domain lab.local
 
-Ref 8: New VLAN10_INFRA Rules
+> **Configuration Evidence:** Updated VLAN10 infrastructure firewall rules supporting DNS and Active Directory communication.
+
 ![New_VLAN10_Firewall_Rules](https://github.com/user-attachments/assets/2b872b14-cf0a-41f7-83b8-f481362d29d5)
 
-Ref 9: New VLAN20_SALES Rules
+> **Configuration Evidence:** Updated VLAN20 Sales firewall rules permitting required Active Directory authentication and domain-join traffic.
+
 ![New_VLAN20_Firewall_Rules](https://github.com/user-attachments/assets/abd17b9f-0f9b-4d04-955a-063148b9461e)
 
 ---
@@ -305,16 +307,16 @@ Successful validation confirms that Active Directory Domain Services integrates 
 
 ## Related Projects
 
-This repository provides centralized policy management, role-based access control, and enterprise security controls for the Enterprise Identity Security Lab.
+The Active Directory Domain Services repository provides the centralized identity platform for the Enterprise Identity Security Lab by delivering authentication, authorization, directory services, DNS, and identity management capabilities consumed by other enterprise services.
 
 | Repository | Architectural Relationship |
-|------------|----------------------------|
+|-----------|----------------------------|
 | **[mstarLabs](https://github.com/mstarLabs/mstarLabs)** | Provides the portfolio architecture, governance standards, repository responsibilities, and modernization workflow for the Enterprise Identity Security Lab. |
-| **[Enterprise Network Architecture](https://github.com/mstarLabs/Enterprise-Network-Architecture)** | Defines the network topology, trust boundaries, and communication requirements used by this repository. |
-| **[Enterprise Firewall Platform](https://github.com/mstarLabs/Enterprise-Firewall-Platform)** | Implements the routing, firewall policies, and least-privilege communication required for centralized policy management. |
-| **[Active Directory Domain Services](https://github.com/mstarLabs/Active-Directory-Domain-Services)** | Provides the centralized identity platform, authentication services, Organizational Units, and directory services required for Group Policy and RBAC. |
+| **[Enterprise Network Architecture](https://github.com/mstarLabs/Enterprise-Network-Architecture)** | Provides the routing, segmentation, addressing, and communication foundation required to support enterprise identity services. |
+| **[Enterprise Firewall Platform](https://github.com/mstarLabs/Enterprise-Firewall-Platform)** | Implements the network communication, routing, and firewall policies required to securely support Active Directory Domain Services. |
+| **[Group Policy, RBAC, and Security Controls](https://github.com/mstarLabs/Group-Policy-RBAC-Security-Controls)** | Consumes the centralized identity platform provided by Active Directory to implement enterprise policy management, role-based access control, and security configuration. |
 
-Additional identity repositories will build upon the centralized identity platform documented here while maintaining the repository responsibilities defined by the Enterprise Identity Security Lab governance framework.
+The related repositories above demonstrate how this repository integrates within the Enterprise Identity Security Lab while maintaining clear architectural responsibilities across the portfolio.
 
 ---
 
