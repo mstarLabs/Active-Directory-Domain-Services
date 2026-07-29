@@ -248,11 +248,11 @@ These engineering findings were incorporated into the Enterprise Firewall Platfo
 
 > **Configuration Evidence:** Updated VLAN10 infrastructure firewall rules supporting enterprise identity services.
 
-![New_VLAN10_Firewall_Rules](...)
+![New_VLAN10_Firewall_Rules](https://github.com/user-attachments/assets/2b872b14-cf0a-41f7-83b8-f481362d29d5)
 
 > **Configuration Evidence:** Updated VLAN20 Sales firewall rules supporting Active Directory authentication and domain communication.
 
-![New_VLAN20_Firewall_Rules](...)
+![New_VLAN20_Firewall_Rules](https://github.com/user-attachments/assets/abd17b9f-0f9b-4d04-955a-063148b9461e)
 
 ---
 
